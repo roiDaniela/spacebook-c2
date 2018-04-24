@@ -1,0 +1,23 @@
+.comments-container {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+li {
+  padding: 15px 0;
+}
+
+.btn-danger {
+  margin-left: 20px;
+}
+
+.comment-name {
+  margin-left: 40px;
+}
+
+.add-comment {
+  margin-left: 15px;
+}
