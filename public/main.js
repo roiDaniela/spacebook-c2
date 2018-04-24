@@ -1,29 +1,9 @@
 var SpacebookApp = function () {
-  // dummy data
-  var posts = [
-    {
-      text: "Hello world 1", comments: [
-        { text: "Man, this is a comment 1!" },
-        { text: "Man, this is a comment 2!" },
-        { text: "Man, this is a comment 3!" }
-      ]
-    },
-    {
-      text: "Hello world 2", comments: [
-        { text: "Man, this is a comment 1!" },
-        { text: "Man, this is a comment 2!" },
-        { text: "Man, this is a comment 3!" }
-      ]
-    },
-    {
-      text: "Hello world 3", comments: [
-        { text: "Man, this is a comment 1!" },
-        { text: "Man, this is a comment 2!" },
-        { text: "Man, this is a comment 3!" }
-      ]
-    }
-  ];
-
+  // if(!localStorage.posts){
+  //
+  // }
+  // var posts = localStorage.posts[0];
+  var posts = [];
   // render posts to page
   // this function empties the posts div, 
   // then adds each post them from the posts array 
