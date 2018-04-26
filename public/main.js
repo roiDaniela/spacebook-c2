@@ -3,10 +3,12 @@ var SpacebookApp = function () {
   var posts;
 
   // Private methods
-  // render posts to page
-  // this function empties the posts div, 
-  // then adds each post them from the posts array 
-  // along with the appropriate HTML
+  /**
+   * render posts to page
+   * this function empties the posts div,
+   * then adds each post them from the posts array
+   * along with the appropriate HTML
+   */
   var _renderPosts = function () {
     // variable for storing our posts div
     var $posts = $('.posts');
@@ -25,14 +27,25 @@ var SpacebookApp = function () {
     }
   }
 
+    /**
+     * update posts array from localstorage
+     */
   var _getFromLocalStorage = function () {
       posts = JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
   }
 
+  /**
+   * save local posts array to localstorage
+   */
   var _saveToLocalStorage = function () {
       localStorage.setItem(STORAGE_ID, JSON.stringify(posts));
   }
 
+  /**
+   * render comments to page
+   * this function empties the comments div,
+   * then adds each comment
+   */
   var _renderComments = function () {
     //empty all the comments - from all posts!!!
     $('.comments-list').empty();
@@ -60,7 +73,11 @@ var SpacebookApp = function () {
     };
   };
 
-  // build a single post object and push it to array
+  // Public methods
+  /**
+   * build a single post object and push it to array
+   * @param {string} text - The text of the post.
+   */
   var createPost = function (text) {
     posts.push({ text: text, comments: [] });
     _saveToLocalStorage();
@@ -68,12 +85,22 @@ var SpacebookApp = function () {
     _renderComments();
   };
 
+  /**
+   * Remove post from array
+   * @param {jquery} $clickedPost - The clicked post.
+   * @param {integer} index - the index of the the wanted post to remove
+   */
   var removePost = function ($clickedPost, index) {
     posts.splice(index, 1);
     _saveToLocalStorage();
     $clickedPost.remove();
   };
 
+  /**
+   * Create comment and update
+   * @param {string} text - The text of the post.
+   * @param {integer} postIndex - The index of the new post in posts array
+   */
   var createComment = function (text, postIndex) {
     var comment = { text: text };
 
@@ -84,6 +111,12 @@ var SpacebookApp = function () {
     _renderComments();
   };
 
+  /**
+   * Create comment and update
+   * @param {jquery} $clickedComment - The wanted element
+   * @param {integer} commentIndex - The index of the comment to remove.
+   * @param {integer} postIndex - The index of the post to remove.
+   */
   var removeComment = function ($clickedComment, commentIndex, postIndex) {
     // remove the comment from the comments array on the correct post object
     posts[postIndex].comments.splice(commentIndex, 1);
@@ -101,8 +134,7 @@ var SpacebookApp = function () {
     createPost: createPost,
     removePost: removePost,
     createComment: createComment,
-    removeComment: removeComment//,
-    //saveToLocalStorage: saveToLocalStorage
+    removeComment: removeComment
   };
 };
 
