@@ -1,9 +1,8 @@
+var STORAGE_ID = 'spacebook';
 var SpacebookApp = function () {
-  // if(!localStorage.posts){
-  //
-  // }
-  // var posts = localStorage.posts[0];
-  var posts = [];
+  var posts;
+
+  // Private methods
   // render posts to page
   // this function empties the posts div, 
   // then adds each post them from the posts array 
@@ -18,12 +17,20 @@ var SpacebookApp = function () {
       var post = posts[i];
       var commentsContainer = '<div class="comments-container">' + '<ul class=comments-list></ul>' +
         '<input type="text" class="comment-name">' +
-        '<button class="btn btn-sm btn-primary add-comment">Post Comment</button> </div>';
+        '<button class="btn btn-sm btn-primary add-comment post-comment">Post Comment</button> </div>';
 
       $posts.append('<li class="post">' +
-        '<a href="#" class="show-comments">Toggle Comments </a> ' +
-        post.text + '<button class="btn btn-danger btn-sm remove">Remove Post</button> ' + commentsContainer + '</li>');
+          '<a href="#" class="show-comments"><i class="right"></i></a> ' +
+        post.text + '<button class="btn btn-danger btn-sm remove">X</button> ' + commentsContainer + '</li>');
     }
+  }
+
+  var _getFromLocalStorage = function () {
+      posts = JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+  }
+
+  var _saveToLocalStorage = function () {
+      localStorage.setItem(STORAGE_ID, JSON.stringify(posts));
   }
 
   var _renderComments = function () {
@@ -46,7 +53,7 @@ var SpacebookApp = function () {
         // append the comment to the post we wanted to comment on
         $post.find('.comments-list').append(
           '<li class="comment">' + comment.text +
-          '<button class="btn btn-danger btn-sm remove-comment">Remove Comment</button>' +
+          '<button class="btn btn-danger btn-sm remove-comment">X</button>' +
           '</li>'
         );
       };
@@ -56,12 +63,14 @@ var SpacebookApp = function () {
   // build a single post object and push it to array
   var createPost = function (text) {
     posts.push({ text: text, comments: [] });
+    _saveToLocalStorage();
     _renderPosts();
     _renderComments();
   };
 
   var removePost = function ($clickedPost, index) {
     posts.splice(index, 1);
+    _saveToLocalStorage();
     $clickedPost.remove();
   };
 
@@ -70,6 +79,7 @@ var SpacebookApp = function () {
 
     // pushing the comment into the correct posts array
     posts[postIndex].comments.push(comment);
+    _saveToLocalStorage();
     //render comments
     _renderComments();
   };
@@ -77,11 +87,13 @@ var SpacebookApp = function () {
   var removeComment = function ($clickedComment, commentIndex, postIndex) {
     // remove the comment from the comments array on the correct post object
     posts[postIndex].comments.splice(commentIndex, 1);
+    _saveToLocalStorage();
     // removing the comment from the page
     $clickedComment.remove();
   };
 
   //  invoke the render method on app load
+  _getFromLocalStorage();
   _renderPosts();
   _renderComments();
 
@@ -89,13 +101,14 @@ var SpacebookApp = function () {
     createPost: createPost,
     removePost: removePost,
     createComment: createComment,
-    removeComment: removeComment
+    removeComment: removeComment//,
+    //saveToLocalStorage: saveToLocalStorage
   };
 };
 
 var app = SpacebookApp();
 
-// Event Handlers below
+// Event Handlers
 
 $('.add-post').on('click', function (e) {
   var text = $('#post-name').val();

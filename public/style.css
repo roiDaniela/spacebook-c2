@@ -10,6 +10,18 @@ li {
   padding: 15px 0;
 }
 
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
 .btn-danger {
   margin-left: 20px;
 }
@@ -17,6 +29,10 @@ li {
 .comment-name {
   margin-left: 40px;
 }
+
+/*.post-comment{*/
+  /*margin-top: 10px;*/
+/*}*/
 
 .add-comment {
   margin-left: 15px;
